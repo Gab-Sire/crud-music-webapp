@@ -4,8 +4,12 @@
 		<meta charset="utf-8">
 		<title></title>
 		<link rel="stylesheet" href="style/tp2Styles.css" />
+		<script src="Tp02Javascript.js"></script>
 	</head>
 	<body>
+		<header>
+			<h1><?=$titrePage?></h1>
+		</header>
 		<?=$contenuSpecifique;?>
 		<footer>
 			TP2 - Automne 2016<br />
