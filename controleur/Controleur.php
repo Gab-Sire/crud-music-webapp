@@ -32,14 +32,17 @@ require_once('modele/AlbumModele.php');
 					require_once('vue/gabarit.php');
 					break;
 				case "rechercher":
-					$this->modele = new AlbumModele();
-					$albums = $this->modele->getAll();
-					$tableauTrouves = $this->modele->recherche($expression);
-					ob_start();
-					include './vue/ResultatRechercheVue.inc.php';
-					$contenuSpecifique = ob_get_clean();
-					require_once('vue/gabarit.php');
-					break;
+					//si la requête de recherche est vide, ré-affiche l'index
+					if(trim($expression) != ""){
+						$this->modele = new AlbumModele();
+						$albums = $this->modele->getAll();
+						$tableauTrouves = $this->modele->recherche($expression);
+						ob_start();
+						include './vue/ResultatRechercheVue.inc.php';
+						$contenuSpecifique = ob_get_clean();
+						require_once('vue/gabarit.php');
+						break;
+					}
 				default:
 					ob_start();
 					include './vue/ListeVue.inc.php';

@@ -60,6 +60,8 @@ class AlbumModele extends Modele {
 	
 	public function recherche($expression){
 		
+		$tableauExpressionsTrouves = array();
+		
 		//élément 0 du tableau possède l'expression en texte pour passer au contrôleur
 		$tableauExpressionsTrouves[] = $expression;
 		

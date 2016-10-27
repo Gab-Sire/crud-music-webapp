@@ -34,7 +34,7 @@ $ajoutInformationsBaseTitre = "Titre";
 $ajoutInformationsBaseArtiste = "Artiste";
 $ajoutInformationsBaseURL = "URL du site";
 
-//section liste des pi�ces
+//section liste des pièces
 $ajoutTitreListePieces = "Liste des pi&egrave;ces";
 $ajoutListePiecesTitre = "Titre";
 $ajoutListeDuree = "Dur&eacute;e";
@@ -49,14 +49,15 @@ $ajoutBoutonAnnulation = "Annuler";
 
 // -- page de le recherche --
 
-//section tableau des r�sultlats de recherche
+//section tableau des résultlats de recherche
+$erreurRecherche = "Aucun r&eacute;sultat trouv&eacute; avec votre crit&egrave;re: ";
 $rechercheArtiste = "Artiste";
 $rechercheAlbum = "Album";
 $recherchePiece = "Pi&egrave;ce";
 
 $rechercheBoutonRetour = "Menu principal";
 
-//message quand aucun r�sultat n'est trouv�
+//message quand aucun résultat n'est trouv�
 $rechercheAucunResultat = "Aucun reacute;sultat trouv&eacute; avec votre crit&egrave;re de recherche: "; 
 
 $piedDePage = 	"TP2 - Automne 2016<br />

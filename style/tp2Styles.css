@@ -10,7 +10,7 @@ body{
 	font-size: 110%;
 	width: 52.8%;
 	margin: auto;
-	background: linear-gradient(to right, red , orange);
+	background: lightgrey;
 	box-sizing: border-box;
 }
 
@@ -154,11 +154,26 @@ body > div:nth-child(4) {
 	border-bottom: double 3px black;
 }
 
+
+/* style pour la page de detail d'un album */
+
+/* style pour la page de recherche */
+
+#erreurRecherche {
+	font-weight: bold;
+	color: red;
+	font-size: 110%;
+	margin: 30px 0 30px 0;
+}
+
+p {
+	text-align: center;
+}
+
 .texteTrouve {
 	font-weight: bold;
 	color: green;
 	font-size: 110%;
 }
-/* style pour la page de detail d'un album */
 
 
