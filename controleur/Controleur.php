@@ -25,6 +25,12 @@ require_once('modele/AlbumModele.php');
 				case "supprimer":
 					supprimeAlbum($entite);
 					break;
+				case "ajouterPieces":
+					ob_start();
+					include './vue/AjoutVue.inc.php';
+					$contenuSpecifique = ob_get_clean();
+					require_once('vue/gabarit.php');
+					break;
 				case "ajouter":
 					ob_start();
 					include './vue/AjoutVue.inc.php';
@@ -32,7 +38,7 @@ require_once('modele/AlbumModele.php');
 					require_once('vue/gabarit.php');
 					break;
 				case "rechercher":
-					//si la requÃªte de recherche est vide, rÃ©-affiche l'index
+					//si la requête de recherche est vide, ré-affiche l'index
 					if(trim($expression) != ""){
 						$this->modele = new AlbumModele();
 						$albums = $this->modele->getAll();
