@@ -38,7 +38,7 @@ require_once('modele/AlbumModele.php');
 					require_once('vue/gabarit.php');
 					break;
 				case "rechercher":
-					//si la requête de recherche est vide, ré-affiche l'index
+					//si la requï¿½te de recherche est vide, rï¿½-affiche l'index
 					if(trim($expression) != ""){
 						$this->modele = new AlbumModele();
 						$albums = $this->modele->getAll();
@@ -48,6 +48,7 @@ require_once('modele/AlbumModele.php');
 						$contenuSpecifique = ob_get_clean();
 						require_once('vue/gabarit.php');
 						break;
+						//allo
 					}
 				default:
 					ob_start();
