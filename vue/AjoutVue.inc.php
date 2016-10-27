@@ -8,7 +8,7 @@
 			$count = $_POST['count'] + 2;
 			$minInputPieces += $count;
 		}
-		else $count = 0;
+		else $nbLignesAjoutes = 0;
 	}
 	
 	$titreInputClasse = $artisteInputClasse = $urlArtisteClasse = "ajoutInfosBox";
@@ -28,7 +28,7 @@
 		if(isset($_POST['titreAlbum'])){
 			$titreAlbum = $_POST['titreAlbum'];
 			if(strlen(trim($titreAlbum)) < 1 || strlen($titreAlbum) > 40){
-				//echo "Le titre de l'album est plus de 40 caractères ou vide <br />";
+				//echo "Le titre de l'album est plus de 40 caractï¿½res ou vide <br />";
 				$titreInputClasse = "erreur";
 			}
 		}
@@ -37,7 +37,7 @@
 		if(isset($_POST['artiste'])){
 			$artiste = $_POST['artiste'];
 			if(strlen(trim($artiste)) < 1 || strlen($artiste) > 40){
-				//echo "Le nom de l'artiste de l'album est plus de 40 caractères ou vide <br />";
+				//echo "Le nom de l'artiste de l'album est plus de 40 caractï¿½res ou vide <br />";
 				$artisteInputClasse = "erreur";
 			}
 		}
@@ -49,7 +49,7 @@
 				$urlArtisteClasse = "erreur";
 		}
 		
-		// Validation avec les pieces musicales à suivre...
+		// Validation avec les pieces musicales ï¿½ suivre...
 		
 		// Validation de l'image de la pochette
 		if(isset($_POST['imagePochette'])){

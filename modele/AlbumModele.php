@@ -86,6 +86,20 @@ class AlbumModele extends Modele {
 	public function supprimeAlbum($album){
 		unset($album);
 	}
+	
+	public function validationInfosBase($titre, $nomArtiste, $url){
+		
+		//validation du titre de l'album
+		$titreClasse = (strlen(trim($titreAlbum)) < 1 || strlen($titreAlbum) > 40) ? "erreur" : "";
+		
+		//validation du nom de l'artiste
+		$nomArtisteClasse = (strlen(trim($artiste)) < 1 || strlen($artiste) > 40) ? "erreur" : "";
+		
+		//validation du url de l'artiste
+		
+	}
+	
+
 }
 
 ?>
