@@ -84,7 +84,8 @@ class AlbumModele extends Modele {
 	}
 	
 	public function supprimeAlbum($album){
-		unset($album);
+		//detruit le fichier d'image de pochette de l'album
+		unlink("images/" . $album->getImagePochette());
 	}
 	
 	public function validationTitreAlbum($titre){
