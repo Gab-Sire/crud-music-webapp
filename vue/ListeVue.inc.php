@@ -4,9 +4,8 @@
 ?>
 
 <div id="listeRecherche">
-	<input type="text" id="barreRecherche"/><br />
-	<!-- <input type="button" value=<?=$listeBoutonRecherche; ?> /> -->
 	<form action="index.php?entite=album&action=rechercher" method="post">
+		<input type="text" name="recherche" id="barreRecherche"/><br />
 		<input type="submit" value=<?=$listeBoutonRecherche; ?> />
 	</form>
 </div>
