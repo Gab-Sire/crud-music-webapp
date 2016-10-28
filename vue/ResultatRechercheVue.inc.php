@@ -1,10 +1,6 @@
 <?php
 	require 'libelles_fr.php';
-?>
-
-<h1><?=$titreRecherche?></h1>
-
-<?php 
+	$titrePage = $titreRecherche;
 	
 	// si le tableau des résultats trouvés ne contient aucun résultat affiche un message d'erreur
 	
@@ -62,8 +58,6 @@
 		}
 		echo "</table>";
 	}
-	
-	
 ?>
 </table>
 

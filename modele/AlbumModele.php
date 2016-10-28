@@ -71,7 +71,7 @@ class AlbumModele extends Modele {
 		
 		//découpe le fichier texte en tableau de données selon les délimiteurs | et saut de ligne
 		$tableauDonnees = preg_split( "/[\|\\n]/", file_get_contents("./data/listeAlbums.txt"));
-	
+		
 		foreach($tableauDonnees as $donnee){
 			if(preg_match($expression, $donnee))
 				$tableauExpressionsTrouves[] = $donnee;

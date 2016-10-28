@@ -12,6 +12,7 @@ require_once('modele/AlbumModele.php');
 			$action = (isset($_GET['action']) ? $_GET['action'] : "");
 			$id = (isset($_GET['id']) ? $_GET['id'] : "");
 			$expression = (isset($_POST['recherche']) ? $_POST['recherche'] : "");
+			$confirmationSupprimer = (isset($_POST['supprimer']) ? $_POST['supprimer'] : false);
 			
 			switch($action){
 				case "detail":
@@ -23,7 +24,12 @@ require_once('modele/AlbumModele.php');
 					require_once('vue/gabarit.php');
 					break;
 				case "supprimer":
-					supprimeAlbum($entite);
+					if($confirmationSupprimer){
+						$elementsASupprimer = ($_POST['checkbox[]']);
+						foreach($elementsASupprimer as $element){
+						 echo $element;
+						}
+					}
 					break;
 				case "ajouterPieces":
 					ob_start();
@@ -48,7 +54,6 @@ require_once('modele/AlbumModele.php');
 						$contenuSpecifique = ob_get_clean();
 						require_once('vue/gabarit.php');
 						break;
-						//allo
 					}
 				default:
 					ob_start();
