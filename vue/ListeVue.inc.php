@@ -4,15 +4,14 @@
 ?>
 
 <div id="listeRecherche">
-<<<<<<< HEAD
+
 	<form action="index.php?action=rechercher" method="post">
 		<input type="text" name="recherche" id="barreRecherche"/><br />
 		<input type="submit" value=<?=$listeBoutonRecherche;?> />
-=======
-	<form action="index.php?entite=album&action=rechercher" method="post">
+	</form>
+	<form action="index.php?action=rechercher" method="post">
 		<input type="text" name="recherche" id="barreRecherche"/><br />
 		<input type="submit" value=<?=$listeBoutonRecherche; ?> />
->>>>>>> 4794cc60aef1aca67451dc823e0c6fc1f9dee010
 	</form>
 </div>
 <div>
