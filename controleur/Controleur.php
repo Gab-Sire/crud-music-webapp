@@ -24,12 +24,32 @@ require_once('modele/AlbumModele.php');
 					require_once('vue/gabarit.php');
 					break;
 				case "supprimer":
-					if($confirmationSupprimer){
-						$elementsASupprimer = ($_POST['checkbox[]']);
-						foreach($elementsASupprimer as $element){
-						 echo $element;
+					//si la confirmation a eu lieu
+					if($confirmationSupprimer != ""){
+						
+						/*	crée un modele et un tableau des éléments transmis, si la valeur de la boite à cocher est checked (n'est pas vide)
+						 	prend le id contenu et supprime l'album correspondant */
+						
+						$this->modele = new AlbumModele();
+						$elementsASupprimer[] = ($_POST['checkbox']);
+						if(isset($elementsASupprimer)){
+							foreach($elementsASupprimer as $element){
+							 	if(isset($element) && $element != ""){
+							 		$id = $element;
+							 		$album = $this->modele->getById($id);
+							 		$this->modele->supprimeAlbum($album);
+								}
+							}
 						}
 					}
+					ob_start();
+					include './vue/ListeVue.inc.php';
+					$contenuSpecifique = ob_get_clean();
+					require_once('vue/gabarit.php');
+					
+					//rafraichit la page
+					header("Refresh: 0; http://localhost/tp2/TP2Git/index.php");
+					exit;
 					break;
 				case "ajouterPieces":
 					ob_start();

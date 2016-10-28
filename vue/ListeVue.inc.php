@@ -4,11 +4,6 @@
 ?>
 
 <div id="listeRecherche">
-
-	<form action="index.php?action=rechercher" method="post">
-		<input type="text" name="recherche" id="barreRecherche"/><br />
-		<input type="submit" value=<?=$listeBoutonRecherche;?> />
-	</form>
 	<form action="index.php?action=rechercher" method="post">
 		<input type="text" name="recherche" id="barreRecherche"/><br />
 		<input type="submit" value=<?=$listeBoutonRecherche; ?> />
@@ -24,9 +19,8 @@
 	</div>
 	<div id="listeAlbums">
 		<form action="index.php?action=supprimer" method="post" >
-			<input type="submit" id="listeBoutonSupprimer"  name="listeBoutonSupprimer" value="<?=$listeBoutonSupprimer;?>" onclick="return confirm('Voulez-vous vraiment supprimer les albums sélectionnés ?')"/>
+			<input type="submit" id="listeBoutonSupprimer"  name="supprimer" value="<?=$listeBoutonSupprimer;?>" onclick="return confirm('Voulez-vous vraiment supprimer les albums sélectionnés ?')"/>
 		<?php
-		
 		
 		$albumModele = new AlbumModele();
 		// le tableau des albums
@@ -40,7 +34,7 @@
 				echo "<img src='images/" . $album->getImagePochette() . "' alt='images/'" . $album->getImagePochette() . "'>";
 				echo "</a>";
 				echo "<label class='listeNomArtiste'>" . $album->getNomArtiste() . "</label>";
-				echo "<input  type='checkbox' name='checkbox[]' value=$id />";
+				echo "<input  type='checkbox' name='checkbox' value=$id />";
 				echo "</div>";
 				$id++;
 			}
