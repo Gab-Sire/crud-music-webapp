@@ -51,13 +51,32 @@ require_once('modele/AlbumModele.php');
 					header("Refresh: 0; http://localhost/tp2/TP2Git/index.php");
 					exit;
 					break;
-				case "ajouterPieces":
-					ob_start();
-					include './vue/AjoutVue.inc.php';
-					$contenuSpecifique = ob_get_clean();
-					require_once('vue/gabarit.php');
-					break;
 				case "ajouter":
+					//Validation des champs de saisie d'un album pour la redirection
+					if(isset($_POST['submit'])){
+						$this->modele = new AlbumModele();
+						
+						// Validations des saisies du titre, de l'artiste, de l'url, l'image Pochette et les pieces
+						$validationTitre = $this->modele->validationTitreAlbum($_POST['titreAlbum']);
+						$validationArtiste = $this->modele->validationArtisteAlbum($_POST['artiste']);
+						$validationUrl = $this->modele->validationUrlArtiste($_POST['urlArtiste']);
+						$validationImagePochette = $this->modele->validationImagePochette($_FILES['imagePochette']);
+						
+						// Verification + Changement de style si les champs sont invalides
+						$titreInputClasse = ($validationTitre == false) ? "erreur" : "ajoutInfosBox";
+						$artisteInputClasse = ($validationArtiste == false) ? "erreur" : "ajoutInfosBox";
+						$urlArtisteClasse = ($validationUrl == false) ? "erreur" : "ajoutInfosBox";
+						$imagePochetteClasse = ($validationImagePochette == false) ? "erreurImagePochette" : "";
+						
+						if($validationTitre = $validationArtiste = $validationUrl = $validationImagePochette == true){
+							/*ob_start();
+							include './vue/ListeVue.inc.php';
+							$contenuSpecifique = ob_get_clean();
+							require_once('vue/gabarit.php');
+							break;*/
+							//header('Location: index.php');
+						}
+					}
 					ob_start();
 					include './vue/AjoutVue.inc.php';
 					$contenuSpecifique = ob_get_clean();
