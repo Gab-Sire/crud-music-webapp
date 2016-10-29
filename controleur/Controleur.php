@@ -29,7 +29,6 @@ require_once('modele/AlbumModele.php');
 						
 						/*	crée un modele et un tableau des éléments transmis, si la valeur de la boite à cocher est checked (n'est pas vide)
 						 	prend le id contenu et supprime l'album correspondant */
-						
 						$this->modele = new AlbumModele();
 						$elementsASupprimer = array();
 						foreach($_POST['checkbox'] as $checkbox){
@@ -45,14 +44,12 @@ require_once('modele/AlbumModele.php');
 							}
 						}
 					}
+					unset($this->modele);
+					$this->modele = new AlbumModele();
 					ob_start();
 					include './vue/ListeVue.inc.php';
 					$contenuSpecifique = ob_get_clean();
 					require_once('vue/gabarit.php');
-					
-					//rafraichit la page
-					header("Location : index.php?action=default");
-					exit;
 					break;
 				case "ajouter":
 					//Validation des champs de saisie d'un album pour la redirection
@@ -98,18 +95,12 @@ require_once('modele/AlbumModele.php');
 						break;
 					}
 				default:
+					$this->modele = new AlbumModele();
 					ob_start();
 					include './vue/ListeVue.inc.php';
 					$contenuSpecifique = ob_get_clean();
 					require_once('vue/gabarit.php');
 					break;
 			}
-			
-				
-			
-			
 		}
-		
-		
-		
 	}
