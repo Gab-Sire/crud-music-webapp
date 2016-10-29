@@ -59,30 +59,31 @@ class AlbumModele extends Modele {
 	}
 	
 	public function recherche($expression){
-		
+	
 		$tableauExpressionsTrouves = array();
-		
+	
 		//élément 0 du tableau possède l'expression en texte pour passer au contrôleur
 		$tableauExpressionsTrouves[] = $expression;
-		
+	
 		$expression = "#". $expression . "#i";
 		//élément 1 du tableau possède l'expression en pattern pour passer au contrôleur
 		$tableauExpressionsTrouves[] = $expression;
-		
+	
 		//découpe le fichier texte en tableau de données selon les délimiteurs | et saut de ligne
 		$tableauDonnees = preg_split( "/[\|\\n]/", file_get_contents("./data/listeAlbums.txt"));
-		
+	
 		foreach($tableauDonnees as $donnee){
 			if(preg_match($expression, $donnee))
 				$tableauExpressionsTrouves[] = $donnee;
 		}
-		
+	
 		//élimine les éléments dupliqués du tableau
 		$tableauExpressionsTrouves = array_unique($tableauExpressionsTrouves);
-		
+	
 		return $tableauExpressionsTrouves;
 	}
 	
+<<<<<<< HEAD
 	public function supprimeAlbum($album, $id){
 		
 		//detruit le fichier d'image de pochette de l'album
@@ -99,21 +100,28 @@ class AlbumModele extends Modele {
 					fputs($fileIn, "");
 			}
 		}	
+=======
+	public function supprimeAlbum($album){
+		//detruit le fichier d'image de pochette de l'album
+		unlink("images/" . $album->getImagePochette());
+>>>>>>> 3c8ef9d977cce11a19675a2fa34b3b034a5cbff9
 	}
 	
-	public function validationInfosBase($titre, $nomArtiste, $url){
-		
-		//validation du titre de l'album
-		$titreClasse = (strlen(trim($titreAlbum)) < 1 || strlen($titreAlbum) > 40) ? "erreur" : "";
-		
-		//validation du nom de l'artiste
-		$nomArtisteClasse = (strlen(trim($artiste)) < 1 || strlen($artiste) > 40) ? "erreur" : "";
-		
-		//validation du url de l'artiste
-		
+	public function validationTitreAlbum($titre){
+		return preg_match("/^[a-zA-Z]{1,40}$/", trim($titre));
 	}
 	
-
+	public function validationArtisteAlbum($artiste){
+		return preg_match("/^[a-zA-Z]{1,40}$/", trim($artiste));
+	}
+	
+	public function validationUrlArtiste($url){
+		return preg_match("/^([\da-z\.-]+)\.([a-z\.]{2,6})$/", trim($url));
+	}
+	
+	public function validationImagePochette($imagePochette){
+		return ($imagePochette['name'] != "");
+	}
 }
 
 ?>
