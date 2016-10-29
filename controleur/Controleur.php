@@ -31,13 +31,16 @@ require_once('modele/AlbumModele.php');
 						 	prend le id contenu et supprime l'album correspondant */
 						
 						$this->modele = new AlbumModele();
-						$elementsASupprimer[] = ($_POST['checkbox']);
+						$elementsASupprimer = array();
+						foreach($_POST['checkbox'] as $checkbox){
+							$elementsASupprimer[] = $checkbox;
+						}
 						if(isset($elementsASupprimer)){
 							foreach($elementsASupprimer as $element){
 							 	if(isset($element) && $element != ""){
 							 		$id = $element;
 							 		$album = $this->modele->getById($id);
-							 		$this->modele->supprimeAlbum($album);
+							 		$this->modele->supprimeAlbum($album, $id);
 								}
 							}
 						}
@@ -48,7 +51,7 @@ require_once('modele/AlbumModele.php');
 					require_once('vue/gabarit.php');
 					
 					//rafraichit la page
-					header("Refresh: 0; http://localhost/tp2/TP2Git/index.php");
+					header("Location : index.php?action=default");
 					exit;
 					break;
 				case "ajouterPieces":

@@ -83,12 +83,22 @@ class AlbumModele extends Modele {
 		return $tableauExpressionsTrouves;
 	}
 	
-	public function supprimeAlbum($album){
+	public function supprimeAlbum($album, $id){
 		
 		//detruit le fichier d'image de pochette de l'album
 		unlink("images/" . $album->getImagePochette());
 		
+		$fileIn = fopen("./data/listeAlbums.txt", 'w+');
+		$compteur = 0;
 		
+		if($fileIn){
+		
+			while(!feof($fileIn)){
+				if($compteur == $id)
+					echo 
+					fputs($fileIn, "");
+			}
+		}	
 	}
 	
 	public function validationInfosBase($titre, $nomArtiste, $url){

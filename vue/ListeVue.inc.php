@@ -34,7 +34,7 @@
 				echo "<img src='images/" . $album->getImagePochette() . "' alt='images/'" . $album->getImagePochette() . "'>";
 				echo "</a>";
 				echo "<label class='listeNomArtiste'>" . $album->getNomArtiste() . "</label>";
-				echo "<input  type='checkbox' name='checkbox' value=$id />";
+				echo "<input  type='checkbox' name='checkbox[]' value=$id />";
 				echo "</div>";
 				$id++;
 			}
