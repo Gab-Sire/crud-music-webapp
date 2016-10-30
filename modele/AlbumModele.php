@@ -86,12 +86,41 @@ class AlbumModele extends Modele {
 	}
 	
 	/**
+	 * Fonction qui permet d'aller chercher la liste des pièces des champs pour les pièces de l'album
+	 * 
+	 * @param $titres les titres des pièces de l'album dans l'ajout
+	 * @param $durees les durees des pièces de l'album dans l'ajout
+	 */
+	public function getListePieces($titres, $durees){
+		$listePieces = array();
+		for ($i=0; $i<count($titres); $i++){
+			if($titres[$i] != '' && $durees[$i] != '')
+				$listePieces[] =  trim($durees[$i])."|".trim($titres[$i]);
+		}
+		return $listePieces;
+	}
+	
+	/**
 	 * Fonction qui permet de créer un album supplémentaire dans le tablelau d'albums
 	 * 
-	 * @param unknown $album l'album à ajouter
+	 * @param $listePiece la liste des pieces totales de l'album à creer
 	 */
-	public function creer($album){
-		$this->albums[] = $album;
+	public function ajouter($listePieces){
+		// Déplacement de l'image dans le bon répertoire
+		$repertoireImages = "./images";
+		$nomFichier = $_FILES['imagePochette']['name'];
+		move_uploaded_file ($_FILES['imagePochette']['tmp_name'],"$repertoireImages/$nomFichier");
+		
+		// Écriture dans le fichier
+		$monFichier = fopen("./data/listeAlbums.txt", 'a') or die("Unable to open file!");
+		$txt = $_POST['artiste']."|".$_POST['titreAlbum']."|".$_FILES['imagePochette']['name']."|".$_POST['urlArtiste']."|".count($listePieces)."|";
+		for($i=0; $i<count($listePieces); $i++){
+			$txt.=$listePieces[$i]."|";
+			if($i == count($listePieces)-1)
+				$txt.=$listePieces[$i];
+		}
+		fwrite($monFichier, "\n".$txt);
+		fclose($monFichier);
 	}
 	
 	public function recherche($expression){
@@ -121,7 +150,7 @@ class AlbumModele extends Modele {
 	}
 	
 	/**
-	 * Fonctio qui permet de supprimer un album
+	 * Fonction qui permet de supprimer un album
 	 * 
 	 * @param $album l'album à supprimer
 	 * @param $id l'identifiant de l'album
@@ -254,6 +283,57 @@ class AlbumModele extends Modele {
 		$triage = ($ordre == 'croissant') ? 'triageTitreCroissant' : 'triageTitreDecroissant';
 		usort($liste, $triage);
 		return $liste;
+	}
+	
+	/**
+	 * Fonction qui permet de valider le champ titre de l'ajout d'album
+	 * 
+	 * @param $titre le titre de l'album
+	 */
+	public function validationTitreAlbum($titre){
+		return preg_match("/^[[:alpha:]]{1,40}$/u", $titre);
+	}
+	
+	/**
+	 * Fonction qui permet de valider le champ artiste de l'ajout d'album
+	 * 
+	 * @param $artiste l'artiste de l'album
+	 */
+	public function validationArtisteAlbum($artiste){
+		return preg_match("/^[a-zA-Z]{1,40}$/u", $artiste);
+	}
+	
+	/**
+	 * Fonction qui permet de valider le champ url de l'ajout d'album
+	 * 
+	 * @param $url l'url de l'album
+	 */
+	public function validationUrlArtiste($url){
+		return preg_match("/^([\da-z\.-]+)\.([a-z\.]{2,6})$/u", $url);
+	}
+	
+	/**
+	 * Fonction qui permet de valider les champs de titre et de duree des pièces de l'ajout d'album
+	 * 
+	 * @param $titre le titre d'une des pièces de l'album
+	 * @param $duree le titre d'une des pièces de l'album
+	 */
+	public function validationChampsPieces($titre, $duree){
+		$erreur = '';
+		if($titre !='' && $duree == '' || preg_match("/^([0-9]|2[0-3]):[0-5][0-9]?/", $duree) == false && $duree != '')
+			$erreur = "erreurDureePieces";
+		else if($titre == '' && $duree != '')
+			$erreur = "erreurTitrePieces";
+		return $erreur;
+	}
+	
+	/**
+	 * Fonction qui permet de valider le champ image Pochette de l'ajout d'album
+	 * 
+	 * @param $imagePochette l'image de la pochette de l'album
+	 */
+	public function validationImagePochette($imagePochette){
+		return ($imagePochette['name'] != "");
 	}
 }
 
