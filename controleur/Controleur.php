@@ -87,12 +87,44 @@ require_once('modele/AlbumModele.php');
 					//Validation des champs de saisie d'un album pour la redirection
 					if(isset($_POST['submit'])){
 						$this->modele = new AlbumModele();
+						$compteurErreur = 0;
 						
-						// Validations des saisies du titre, de l'artiste, de l'url, l'image Pochette et les pieces
+						//Validations des saisies du titre, de l'artiste, de l'url, l'image Pochette et les pieces
 						$validationTitre = $this->modele->validationTitreAlbum($_POST['titreAlbum']);
 						$validationArtiste = $this->modele->validationArtisteAlbum($_POST['artiste']);
 						$validationUrl = $this->modele->validationUrlArtiste($_POST['urlArtiste']);
 						$validationImagePochette = $this->modele->validationImagePochette($_FILES['imagePochette']);
+						
+						$erreurTitrePiece = array(); //Liste des classes de chacun des champs titre des pièces
+						$erreurDureePiece = array(); //Liste des classes de chacun des champs duree des pièces
+						for($i=0; $i<count($_POST['titresPieces']); $i++){
+							$titre = $_POST['titresPieces'][$i];
+							$duree = $_POST['dureesPieces'][$i];
+							if($this->modele->validationChampsPieces($titre, $duree) != "erreurTitrePieces")
+								$erreurTitrePiece[] = substr_replace($this->modele->validationChampsPieces($titre, $duree),"ajoutListeBox",0);
+							else{
+								$erreurTitrePiece[] = $this->modele->validationChampsPieces($titre, $duree);
+								$compteurErreur++;
+							}
+							
+							if($this->modele->validationChampsPieces($titre, $duree) != "erreurDureePieces")
+								$erreurDureePiece[] = substr_replace($this->modele->validationChampsPieces($titre, $duree),"ajoutListeBox",0);
+							else{
+								$erreurDureePiece[] = $this->modele->validationChampsPieces($titre, $duree);
+								$compteurErreur++;
+							}
+							
+							for($j=0; $j<count($erreurTitrePiece); $j++){
+								$compteur = 0;
+								if($erreurTitrePiece[$j] == '' && $erreurDureePiece[$j])
+									$compteur++;
+							}
+							if($compteur > 0){
+								$compteurErreur++;
+								$erreurTitrePiece[0] = 'erreurTitrePieces';
+								$erreurDureePiece[0] = 'erreurDureePieces';
+							}
+						}
 						
 						// Verification + Changement de style si les champs sont invalides
 						$titreInputClasse = ($validationTitre == false) ? "erreur" : "ajoutInfosBox";
@@ -100,13 +132,16 @@ require_once('modele/AlbumModele.php');
 						$urlArtisteClasse = ($validationUrl == false) ? "erreur" : "ajoutInfosBox";
 						$imagePochetteClasse = ($validationImagePochette == false) ? "erreurImagePochette" : "";
 						
-						if($validationTitre = $validationArtiste = $validationUrl = $validationImagePochette == true){
-							/*ob_start();
+						// Vérification si les champs sont valides
+						if($validationTitre = $validationArtiste = $validationUrl = $validationImagePochette == true && $compteurErreur == 0){
+							//Procédure d'ajout d'un album dans la liste
+							$listePiece = $this->modele->getListePieces($_POST['titresPieces'], $_POST['dureesPieces']);
+							$this->modele->ajouter($listePiece);
+							ob_start();
 							include './vue/ListeVue.inc.php';
 							$contenuSpecifique = ob_get_clean();
 							require_once('vue/gabarit.php');
-							break;*/
-							//header('Location: index.php');
+							break;
 						}
 					}
 					ob_start();
