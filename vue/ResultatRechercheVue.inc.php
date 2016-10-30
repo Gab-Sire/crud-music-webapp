@@ -13,7 +13,6 @@
 		
 		echo "<table>";
 		echo "<thead><tr><th>$rechercheArtiste</th><th>$rechercheAlbum</th><th>$recherchePiece</td></tr></thead>";
-	
 		
 		$elementEvidence = "<span class='texteTrouve'>" . strtoupper($tableauTrouves[0]) . "</span>";
 		$albumInitial = "";

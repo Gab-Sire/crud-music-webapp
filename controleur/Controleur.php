@@ -68,7 +68,7 @@ require_once('modele/AlbumModele.php');
 						}
 						if(isset($elementsASupprimer)){
 							foreach($elementsASupprimer as $element){
-							 	if(isset($element) && $element != ""){
+							 	if($element !== ""){
 							 		$id = $element;
 							 		$album = $this->modele->getById($id);
 							 		$this->modele->supprimeAlbum($album, $id);
@@ -76,8 +76,8 @@ require_once('modele/AlbumModele.php');
 							}
 						}
 					}
-					unset($this->modele);
 					$this->modele = new AlbumModele();
+					$albums = $this->modele->albums;
 					ob_start();
 					include './vue/ListeVue.inc.php';
 					$contenuSpecifique = ob_get_clean();
@@ -128,6 +128,7 @@ require_once('modele/AlbumModele.php');
 					}
 				default:
 					$this->modele = new AlbumModele();
+					$albums = $this->modele->albums;
 					ob_start();
 					include './vue/ListeVue.inc.php';
 					$contenuSpecifique = ob_get_clean();

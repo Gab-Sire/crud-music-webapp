@@ -22,13 +22,10 @@
 			<input type="submit" id="listeBoutonSupprimer"  name="supprimer" value="<?=$listeBoutonSupprimer;?>" onclick="return confirm('Voulez-vous vraiment supprimer les albums sélectionnés ?')"/>
 		<?php
 		
-		$albumModele = new AlbumModele();
-		// le tableau des albums
-		$collectionAlbums = $albumModele->albums;
 		//l'emplacement de l'album dans le tableau
 		$id= 0;
-		
-			foreach ($collectionAlbums as $album) { 
+
+			foreach ($albums as $album) { 
 				echo "<div class='listeIcone'>";
 				echo "<a href='index.php?action=detail&id=" . $id . "'>";
 				echo "<img src='images/" . $album->getImagePochette() . "' alt='images/'" . $album->getImagePochette() . "'>";

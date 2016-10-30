@@ -25,7 +25,7 @@ class AlbumModele extends Modele {
 			while(($line = fgets($fileIn)) !== false && $line != ""){
 				
 				$tableauDonnees = explode("|", $line);			//tableau des données du fichier texte 
-				$nbPieces = $tableauDonnees[4];				//nombre de pièces selon l'éément 4 du tableau
+				$nbPieces = $tableauDonnees[4];				//nombre de pièces selon l'élément 4 du tableau
 				$listePieces = array();				//tableau des pièces à venir
 				$tmpsSecondes = 0;					//temps total en secondes de l'album à venir
 				
@@ -48,7 +48,6 @@ class AlbumModele extends Modele {
 				
 				//crée l'objet Album avec tous ses champs
 				$this->albums[] = new Album($tableauDonnees[1],$tableauDonnees[2], $tableauDonnees[0], $nbPieces, $tmpsTotal, $tableauDonnees[3], $listePieces);
-				
 			}
 			fclose($fileIn);
 		}	
@@ -136,13 +135,13 @@ class AlbumModele extends Modele {
 		$file = file_get_contents("./data/listeAlbums.txt");
 		$data = explode("\n", $file);
 		$data[$id] = "";
-		var_dump($data);
 		
 		$fileOut = fopen("./data/listeAlbums.txt", "w");
+		file_put_contents("./data/listeAlbums.txt", "");
 		
 		foreach($data as $line){
 			if($line !== "")
-				fputs($fileOut, "$line");
+				fputs($fileOut, "$line" ."\n");
 		}	
 	
 	}
