@@ -203,7 +203,7 @@ input[type='checkbox']{
 	width: 90%;
 }
 
-.ajoutListeBox {
+.ajoutListeBox, .erreurTitrePieces, .erreurDureePieces{
 	display: block;
 	width: 100%;
 	margin-bottom: 5px;
