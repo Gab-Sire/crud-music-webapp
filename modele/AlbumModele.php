@@ -185,7 +185,7 @@ class AlbumModele extends Modele {
 		//sépare le contenu du fichier texte de data ligne par ligne et affiche une string vide pour la pigne de l'album à supprimer
 		$file = file_get_contents("./data/listeAlbums.txt");
 		$data = explode("\n", $file);
-		$data[$id] = "";
+		$data[$id-$nbAlbumsSupprimes] = "";
 		
 		$fileOut = fopen("./data/listeAlbums.txt", "w");
 		file_put_contents("./data/listeAlbums.txt", "");
@@ -194,6 +194,7 @@ class AlbumModele extends Modele {
 			if($line !== "")
 				fputs($fileOut, "$line" ."\n");
 		}	
+	
 	
 	}
 	
