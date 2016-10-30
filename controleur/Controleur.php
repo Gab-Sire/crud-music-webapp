@@ -104,6 +104,13 @@ require_once('modele/AlbumModele.php');
 							$erreurDureePiece[] = $this->modele->validationDureesPieces($titre, $duree);
 						}
 						
+						// Vérification du nombre d'erreurs dans les pieces
+						for ($i=0; $i<count($erreurTitrePiece); $i++){
+							if($erreurTitrePiece[$i] == 'erreurTitrePieces')
+								$compteurErreur++;
+							if($erreurDureePiece[$i] == 'erreurDureePieces')
+								$compteurErreur++;
+						}
 						
 						// Verification + Changement de style si les champs sont invalides
 						$titreInputClasse = ($validationTitre == false) ? "erreur" : "ajoutInfosBox";
