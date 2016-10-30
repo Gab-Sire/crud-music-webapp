@@ -105,7 +105,19 @@ require_once('modele/AlbumModele.php');
 							$erreurTitrePiece[] = $this->modele->validationTitresPieces($titre, $duree);
 							$erreurDureePiece[] = $this->modele->validationDureesPieces($titre, $duree);
 						}
+<<<<<<< HEAD
 					
+=======
+						
+						// Vérification du nombre d'erreurs dans les pieces
+						for ($i=0; $i<count($erreurTitrePiece); $i++){
+							if($erreurTitrePiece[$i] == 'erreurTitrePieces')
+								$compteurErreur++;
+							if($erreurDureePiece[$i] == 'erreurDureePieces')
+								$compteurErreur++;
+						}
+						
+>>>>>>> 9cf3d3c04a1d1271d3895237df13fcef1d07e6a2
 						// Verification + Changement de style si les champs sont invalides
 						$titreInputClasse = ($validationTitre == false) ? "erreur" : "ajoutInfosBox";
 						$artisteInputClasse = ($validationArtiste == false) ? "erreur" : "ajoutInfosBox";
@@ -117,8 +129,11 @@ require_once('modele/AlbumModele.php');
 							//Procédure d'ajout d'un album dans la liste
 							$listePiece = $this->modele->getListePieces($_POST['titresPieces'], $_POST['dureesPieces']);
 							$this->modele->ajouter($listePiece);
+<<<<<<< HEAD
 							
 							//crée un nouveau modèle et charge la page d'accueil si l'album a été ajouté correctement selon le formulaire
+=======
+>>>>>>> 9cf3d3c04a1d1271d3895237df13fcef1d07e6a2
 							$this->modele = new AlbumModele();
 							$albums = $this->modele->albums;
 							ob_start();
