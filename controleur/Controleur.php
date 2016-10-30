@@ -121,7 +121,7 @@ require_once('modele/AlbumModele.php');
 						$imagePochetteClasse = ($validationImagePochette == false) ? "erreurImagePochette" : "";
 						
 						// Vérification si les champs sont valides
-						if($validationTitre = $validationArtiste = $validationUrl = $validationImagePochette == true){
+						if($validationTitre = $validationArtiste = $validationUrl = $validationImagePochette == true && $compteurErreur == 0){
 							//Procédure d'ajout d'un album dans la liste
 							$listePiece = $this->modele->getListePieces($_POST['titresPieces'], $_POST['dureesPieces']);
 							$this->modele->ajouter($listePiece);
