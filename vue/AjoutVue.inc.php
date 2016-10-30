@@ -38,8 +38,8 @@
 			<tbody>
 				<?php for($i=0; $i < $minInputPieces; $i++){?>
 				<tr>
-					<td class="titrePiece"><input type='text' class='ajoutListeBox' name="titrePieces[]" value="<?php if(isset($_POST['titrePieces'][$i])) echo $_POST['titrePieces'][$i];//if(isset($_POST['titrePieces'])) echo $_POST['titrePieces'][$i]?>"/></td>
-					<td class="dureePiece"><input type='text' class='ajoutListeBox' name='dureePiece[]' value="<?php if(isset($_POST['dureePiece'][$i])) echo $_POST['dureePiece'][$i];//if(isset($_POST['titrePieces'])) echo $_POST['titrePieces'][$i]?>"/></td>
+					<td class="titrePiece"><input type='text' class="<?php if(isset($erreurTitrePiece[$i]))echo $erreurTitrePiece[$i]; else echo 'ajoutListeBox';?>" name="titresPieces[]" value="<?php if(isset($_POST['titresPieces'][$i])) echo $_POST['titresPieces'][$i];//if(isset($_POST['titrePieces'])) echo $_POST['titrePieces'][$i]?>"/></td>
+					<td class="dureePiece"><input type='text' class="<?php if(isset($erreurDureePiece[$i])) echo $erreurDureePiece[$i]; else echo 'ajoutListeBox';?>" name='dureesPieces[]' value="<?php if(isset($_POST['dureesPieces'][$i])) echo $_POST['dureesPieces'][$i];//if(isset($_POST['titrePieces'])) echo $_POST['titrePieces'][$i]?>"/></td>
 				</tr>
 				<?php }?>
 			</tbody>
