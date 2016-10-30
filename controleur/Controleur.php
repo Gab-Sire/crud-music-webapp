@@ -90,6 +90,8 @@ require_once('modele/AlbumModele.php');
 					if(isset($_POST['submit'])){
 						$this->modele = new AlbumModele();
 						$compteurErreur = 0;
+						$compteurVideTitre = 0;
+						$compteurVideDuree = 0;
 						
 						//Validations des saisies du titre, de l'artiste, de l'url, l'image Pochette et les pieces
 						$validationTitre = $this->modele->validationTitreAlbum($_POST['titreAlbum']);
