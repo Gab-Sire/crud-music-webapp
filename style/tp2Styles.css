@@ -189,7 +189,7 @@ input[type='checkbox']{
 	background-color: white;
 }
 
-.erreur {
+.erreur, .erreurTitrePieces, .erreurDureePiece, .erreurImagePochette{
 	background-color: red;
 }
 
