@@ -116,6 +116,8 @@ require_once('modele/AlbumModele.php');
 							//Procédure d'ajout d'un album dans la liste
 							$listePiece = $this->modele->getListePieces($_POST['titresPieces'], $_POST['dureesPieces']);
 							$this->modele->ajouter($listePiece);
+							$this->modele = new AlbumModele();
+							$albums = $this->modele->albums;
 							ob_start();
 							include './vue/ListeVue.inc.php';
 							$contenuSpecifique = ob_get_clean();
