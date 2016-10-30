@@ -112,6 +112,16 @@ require_once('modele/AlbumModele.php');
 								$compteurErreur++;
 							if($erreurDureePiece[$i] == 'erreurDureePieces')
 								$compteurErreur++;
+							if($erreurTitrePiece[$i] == 'ajoutListeBox')
+								$compteurVideTitre++;
+							if($erreurDureePiece[$i] == 'ajoutListeBox')
+								$compteurVideDuree++;
+						}
+						
+						if($compteurVideTitre = $compteurVideDuree == count($erreurTitrePiece)){
+							$erreurTitrePiece[0] = 'erreurTitrePieces';
+							$erreurDureePiece[0] = 'erreurDureePieces';
+							$compteurErreur++;
 						}
 						
 						// Verification + Changement de style si les champs sont invalides
