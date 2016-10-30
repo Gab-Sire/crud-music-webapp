@@ -116,9 +116,9 @@ class AlbumModele extends Modele {
 		$txt = $_POST['artiste']."|".$_POST['titreAlbum']."|".$_FILES['imagePochette']['name']."|".$_POST['urlArtiste']."|".count($listePieces)."|";
 		for($i=0; $i<count($listePieces); $i++){
 			$txt.=$listePieces[$i]."|";
-			if($i == count($listePieces)-1)
-				$txt.=$listePieces[$i];
 		}
+		if($i == count($listePieces)-1)
+			$txt.=$listePieces[$i];
 		fwrite($monFichier, "\n".$txt);
 		fclose($monFichier);
 	}
@@ -291,7 +291,7 @@ class AlbumModele extends Modele {
 	 * @param $titre le titre de l'album
 	 */
 	public function validationTitreAlbum($titre){
-		return preg_match("/^[[:alpha:]]{1,40}$/u", $titre);
+		return preg_match("/^[a-zA-Z ]{1,40}$/u", trim($titre));
 	}
 	
 	/**
@@ -300,7 +300,7 @@ class AlbumModele extends Modele {
 	 * @param $artiste l'artiste de l'album
 	 */
 	public function validationArtisteAlbum($artiste){
-		return preg_match("/^[a-zA-Z]{1,40}$/u", $artiste);
+		return preg_match("/^[a-zA-Z ]{1,40}$/u", trim($artiste));
 	}
 	
 	/**
@@ -320,7 +320,7 @@ class AlbumModele extends Modele {
 	 */
 	public function validationTitresPieces($titre, $duree){
 		$erreur = 'ajoutListeBox';
-		if($titre == '' && $duree != '')
+		if(preg_match("/^[a-zA-Z ]{1,40}$/u", trim($titre)) == false && $duree != '')
 			$erreur = "erreurTitrePieces";
 		return $erreur;
 	}

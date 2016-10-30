@@ -76,6 +76,8 @@ require_once('modele/AlbumModele.php');
 							}
 						}
 					}
+					
+					//crée un nouveau modèle et charge la page d'accueil
 					$this->modele = new AlbumModele();
 					$albums = $this->modele->albums;
 					ob_start();
@@ -103,8 +105,7 @@ require_once('modele/AlbumModele.php');
 							$erreurTitrePiece[] = $this->modele->validationTitresPieces($titre, $duree);
 							$erreurDureePiece[] = $this->modele->validationDureesPieces($titre, $duree);
 						}
-						
-						
+					
 						// Verification + Changement de style si les champs sont invalides
 						$titreInputClasse = ($validationTitre == false) ? "erreur" : "ajoutInfosBox";
 						$artisteInputClasse = ($validationArtiste == false) ? "erreur" : "ajoutInfosBox";
@@ -112,10 +113,14 @@ require_once('modele/AlbumModele.php');
 						$imagePochetteClasse = ($validationImagePochette == false) ? "erreurImagePochette" : "";
 						
 						// Vérification si les champs sont valides
-						if($validationTitre = $validationArtiste = $validationUrl = $validationImagePochette == true && $compteurErreur == 0){
+						if($validationTitre = $validationArtiste = $validationUrl = $validationImagePochette == true){
 							//Procédure d'ajout d'un album dans la liste
 							$listePiece = $this->modele->getListePieces($_POST['titresPieces'], $_POST['dureesPieces']);
 							$this->modele->ajouter($listePiece);
+							
+							//crée un nouveau modèle et charge la page d'accueil si l'album a été ajouté correctement selon le formulaire
+							$this->modele = new AlbumModele();
+							$albums = $this->modele->albums;
 							ob_start();
 							include './vue/ListeVue.inc.php';
 							$contenuSpecifique = ob_get_clean();
@@ -123,6 +128,8 @@ require_once('modele/AlbumModele.php');
 							break;
 						}
 					}
+					
+					//charge la page ajout dans le cas que le formulaire comporte une ou plusieurs erreurs
 					ob_start();
 					include './vue/AjoutVue.inc.php';
 					$contenuSpecifique = ob_get_clean();
@@ -141,6 +148,7 @@ require_once('modele/AlbumModele.php');
 						break;
 					}
 				default:
+					//crée un nouveau modèle et charge la page d'accueil
 					$this->modele = new AlbumModele();
 					$albums = $this->modele->albums;
 					ob_start();
