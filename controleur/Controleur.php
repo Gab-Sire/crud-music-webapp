@@ -119,9 +119,9 @@ require_once('modele/AlbumModele.php');
 								$compteurErreur++;
 							if($erreurDureePiece[$i] == 'erreurDureePieces')
 								$compteurErreur++;
-							if($erreurTitrePiece[$i] == 'ajoutListeBox')
+							if($erreurTitrePiece[$i] == 'ajoutListeBox' &&  $_POST['titresPieces'][$i] == '')
 								$compteurVideTitre++;
-							if($erreurDureePiece[$i] == 'ajoutListeBox')
+							if($erreurDureePiece[$i] == 'ajoutListeBox' &&  $_POST['dureesPieces'][$i] == '')
 								$compteurVideDuree++;
 						}
 						
