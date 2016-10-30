@@ -318,12 +318,17 @@ class AlbumModele extends Modele {
 	 * @param $titre le titre d'une des pièces de l'album
 	 * @param $duree le titre d'une des pièces de l'album
 	 */
-	public function validationChampsPieces($titre, $duree){
-		$erreur = '';
+	public function validationTitresPieces($titre, $duree){
+		$erreur = 'ajoutListeBox';
+		if($titre == '' && $duree != '')
+			$erreur = "erreurTitrePieces";
+		return $erreur;
+	}
+	
+	public function validationDureesPieces($titre, $duree){
+		$erreur = 'ajoutListeBox';
 		if($titre !='' && $duree == '' || preg_match("/^([0-9]|2[0-3]):[0-5][0-9]?/", $duree) == false && $duree != '')
 			$erreur = "erreurDureePieces";
-		else if($titre == '' && $duree != '')
-			$erreur = "erreurTitrePieces";
 		return $erreur;
 	}
 	
