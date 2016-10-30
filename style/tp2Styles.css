@@ -209,6 +209,16 @@ input[type='checkbox']{
 	margin-bottom: 5px;
 }
 
+#ajoutPieces{
+	text-align: center;
+	margin: auto;
+}
+
+#boutonAjoutPieces {
+	text-align: left;
+	margin: 20px 0 20px 0;
+}
+
 .sectionBoutons {
 	padding:20px;
 	text-align: center;

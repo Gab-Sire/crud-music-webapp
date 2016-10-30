@@ -45,7 +45,9 @@
 			</tbody>
 		</table>
 	</div>
-	<button type="submit" name="ajoutPieces" formaction="<?php echo $_SERVER['PHP_SELF']."?action=ajouter";?>" value="<?=$ajoutListeBouton?>"><?=$ajoutListeBouton?></button>
+	<div id='ajoutPieces'>
+	<button type="submit" name="ajoutPieces" id='boutonAjoutPieces' formaction="<?php echo $_SERVER['PHP_SELF']."?action=ajouter";?>" value="<?=$ajoutListeBouton?>"><?=$ajoutListeBouton?></button>
+	</div>
 	<div class="sectionBoutons">
 		<h2><?=$ajoutTitreImagePochette?></h2>
 			<div>
