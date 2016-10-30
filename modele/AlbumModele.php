@@ -106,13 +106,20 @@ class AlbumModele extends Modele {
 	 * @param $listePiece la liste des pieces totales de l'album à creer
 	 */
 	public function ajouter($listePieces){
+		
 		// Déplacement de l'image dans le bon répertoire
 		$repertoireImages = "./images";
 		$nomFichier = $_FILES['imagePochette']['name'];
+		
+		//booléen pour exécuter un téléversement avec un nomde fichier modifié ou non
+		$uploadModifie = false;
+		
 		foreach($this->albums as $album){
 			
 			//si le nom du fichier d'image existe déjà en tant qu'image pochette, modifie le nom du fichier image en lui ajoutant 1 avant l'extension
 			if($album->getImagePochette() == $nomFichier){
+				
+				$uploadModifie = true;
 				
 				//tableau séparant le nom du fichier de l'extension
 				$tableauNomFichier = explode(".", $nomFichier);
@@ -120,10 +127,11 @@ class AlbumModele extends Modele {
 				//le téléversement se fait avec le nom modifié, le nom modifié se retrouve aussi dans le fichier texte
 				move_uploaded_file ($_FILES['imagePochette']['tmp_name'],"$repertoireImages/$tableauNomFichier[0]1.$tableauNomFichier[1]");
 				$_FILES['imagePochette']['name'] = "$tableauNomFichier[0]1.$tableauNomFichier[1]";
-				break;
-			}		
+			}
 		}
-		move_uploaded_file ($_FILES['imagePochette']['tmp_name'],"$repertoireImages/$nomFichier");
+		
+		if($uploadModifie == false)
+			move_uploaded_file ($_FILES['imagePochette']['tmp_name'],"$repertoireImages/$nomFichier");
 		
 		// Écriture dans le fichier
 		$monFichier = fopen("./data/listeAlbums.txt", 'a') or die("Unable to open file!");
