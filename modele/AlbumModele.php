@@ -3,10 +3,18 @@ include 'classe/Album.php';
 include 'classe/Piece.php';
 include 'Modele.php';
 
+/**
+ * Classe représentant le modèle des albums
+ * @author Gabriel Cyr et Vincent Perraut
+ *
+ */
 class AlbumModele extends Modele {
 	
 	public $albums;
 	
+	/**
+	 * Constructeur de la classe AlbumModele
+	 */
 	public function __construct(){
 		
 		$this->albums = array();
@@ -16,8 +24,8 @@ class AlbumModele extends Modele {
 
 			while(($line = fgets($fileIn)) !== false && $line != ""){
 				
-				$tab = explode("|", $line);			//tableau des données du fihier texte 
-				$nbPieces = $tab[4];				//nombre de pièces selon l'éément 4 du tableau
+				$tableauDonnees = explode("|", $line);			//tableau des données du fichier texte 
+				$nbPieces = $tableauDonnees[4];				//nombre de pièces selon l'éément 4 du tableau
 				$listePieces = array();				//tableau des pièces à venir
 				$tmpsSecondes = 0;					//temps total en secondes de l'album à venir
 				
@@ -25,10 +33,10 @@ class AlbumModele extends Modele {
 				for($i = 0; $i < $nbPieces; $i++){
 					
 					//crée l'objet Pièce et l'insère dans la liste
-					$listePieces[] = new Piece($i+1, $tab[6 + (2*$i)],$tab[5 + (2*$i)]);
+					$listePieces[] = new Piece($i+1, $tableauDonnees[6 + (2*$i)],$tableauDonnees[5 + (2*$i)]);
 					
 					//définit le temps total des pièces en secondes
-					$duree = explode(":", $tab[5 + (2*$i)]);
+					$duree = explode(":", $tableauDonnees[5 + (2*$i)]);
 					$tmpsSecondes += $duree[0]*60;
 					$tmpsSecondes += $duree[1];
 				}
@@ -39,21 +47,50 @@ class AlbumModele extends Modele {
 				$tmpsTotal = ($minutes . ":" . $secondes);
 				
 				//crée l'objet Album avec tous ses champs
-				$this->albums[] = new Album($tab[1],$tab[2], $tab[0], $nbPieces, $tmpsTotal, $tab[3], $listePieces);
+				$this->albums[] = new Album($tableauDonnees[1],$tableauDonnees[2], $tableauDonnees[0], $nbPieces, $tmpsTotal, $tableauDonnees[3], $listePieces);
 				
 			}
 			fclose($fileIn);
 		}	
 	}
 	
+	/**
+	 * Fonction qui permet de retourner tous les albums
+	 */
 	public function getAll(){
 		return $this->albums;
 	}
 	
+	/**
+	 * Fonction qui permet de retourner un album selon son id
+	 * 
+	 * @param $id l'identifiant de l'album (son index dans le tableau d'albums)
+	 * @return album
+	 */
 	public function getById($id){
 		return ($this->albums[$id]);
 	}
 	
+	/**
+	 * Fonction qui permet de retourner un album selon nom titre
+	 * 
+	 * @param $titre le titre de l'album
+	 * @return album
+	 */
+	public function getByTitre($titre){
+		
+		//itère sur tous les albums jusqu'à ce que le titre corresponde
+		foreach($this->albums as $album){
+			if($album->getTitre() == $titre)
+				return $album;
+		}
+	}
+	
+	/**
+	 * Fonction qui permet de créer un album supplémentaire dans le tablelau d'albums
+	 * 
+	 * @param unknown $album l'album à ajouter
+	 */
 	public function creer($album){
 		$this->albums[] = $album;
 	}
@@ -72,6 +109,7 @@ class AlbumModele extends Modele {
 		//découpe le fichier texte en tableau de données selon les délimiteurs | et saut de ligne
 		$tableauDonnees = preg_split( "/[\|\\n]/", file_get_contents("./data/listeAlbums.txt"));
 		
+		
 		foreach($tableauDonnees as $donnee){
 			if(preg_match($expression, $donnee))
 				$tableauExpressionsTrouves[] = $donnee;
@@ -83,11 +121,18 @@ class AlbumModele extends Modele {
 		return $tableauExpressionsTrouves;
 	}
 	
+	/**
+	 * Fonctio qui permet de supprimer un album
+	 * 
+	 * @param $album l'album à supprimer
+	 * @param $id l'identifiant de l'album
+	 */
 	public function supprimeAlbum($album, $id){
 		
 		//detruit le fichier d'image de pochette de l'album
 		unlink("images/" . $album->getImagePochette());
 		
+		//sépare le contenu du fichier texte de data ligne par ligne et affiche une string vide pour la pigne de l'album à supprimer
 		$file = file_get_contents("./data/listeAlbums.txt");
 		$data = explode("\n", $file);
 		$data[$id] = "";
@@ -102,19 +147,115 @@ class AlbumModele extends Modele {
 	
 	}
 	
-	public function validationInfosBase($titre, $nomArtiste, $url){
+	/**
+	 * Fonction qui permet de trier une liste de pièces selon leur numéro
+	 * 
+	 * @param $liste la liste à trier 
+	 * @param $ordre l'ordre selon lequel trier (croissant ou décroissant)
+	 * @return $liste la liste triée
+	 */
+	public function trierListeNumero($liste, $ordre){
 		
-		//validation du titre de l'album
-		$titreClasse = (strlen(trim($titreAlbum)) < 1 || strlen($titreAlbum) > 40) ? "erreur" : "";
+		//fonction de comparaison pour trier selon l'ordre croissant
+		function triageNumeroCroissant($a, $b){
+			if($a->getNumero() == $b->getNumero())
+				return 0;
+			return $a->getNumero()-$b->getNumero();
+		}
 		
-		//validation du nom de l'artiste
-		$nomArtisteClasse = (strlen(trim($artiste)) < 1 || strlen($artiste) > 40) ? "erreur" : "";
+		//fonction de comparaison pour trier selon l'ordre décroissant
+		function triageNumeroDecroissant($a, $b){
+			if($a->getNumero() == $b->getNumero())
+				return 0;
+			return $b->getNumero()-$a->getNumero();
+		}
 		
-		//validation du url de l'artiste
-		
+		//choisir la bonne fonction de comparaison selon l'ordre choisi et trier la liste par valeur
+		$triage = ($ordre == 'croissant') ? 'triageNumeroCroissant' : 'triageNumeroDecroissant';
+		usort($liste, $triage);
+		return $liste;
 	}
 	
-
+	/**
+	 * Fonction qui permet de trier une liste de pièces selon leur durée
+	 *
+	 * @param $liste la liste à trier
+	 * @param $ordre l'ordre selon lequel trier (croissant ou décroissant)
+	 * @return $liste la liste triée
+	 */
+	public function trierListeDuree($liste, $ordre){
+		
+		//fonction de comparaison pour trier selon l'ordre croissant
+		function triageDureeCroissant($a, $b){
+			
+			$dureeA = explode(":",$a->getDuree());
+			$dureeB = explode(":",$b->getDuree());
+			$tmpsSecondesA = 0;
+			$tmpsSecondesB = 0;
+			
+			$tmpsSecondesA += $dureeA[0]*60;
+			$tmpsSecondesA += $dureeA[1];
+			$tmpsSecondesB += $dureeB[0]*60;
+			$tmpsSecondesB += $dureeB[1];
+			
+			if($tmpsSecondesA == $tmpsSecondesB)
+				return 0;
+			return ($tmpsSecondesA > $tmpsSecondesB) ? 1 : -1;
+		}
+		
+		//fonction de comparaison pour trier selon l'ordre décroissant
+		function triageDureeDecroissant($a, $b){
+				
+			$dureeA = explode(":",$a->getDuree());
+			$dureeB = explode(":",$b->getDuree());
+			$tmpsSecondesA = 0;
+			$tmpsSecondesB = 0;
+				
+			$tmpsSecondesA += $dureeA[0]*60;
+			$tmpsSecondesA += $dureeA[1];
+			$tmpsSecondesB += $dureeB[0]*60;
+			$tmpsSecondesB += $dureeB[1];
+				
+			if($tmpsSecondesA == $tmpsSecondesB)
+				return 0;
+			return ($tmpsSecondesA > $tmpsSecondesB) ? -1 : 1;		
+		}
+		
+		//choisir la bonne fonction de comparaison selon l'ordre choisi et trier la liste par valeur
+		$triage = ($ordre == 'croissant') ? 'triageDureeCroissant' : 'triageDureeDecroissant';
+		usort($liste, $triage);
+		return $liste;
+	}
+	
+	/**
+	 * Fonction qui permet de trier une liste de pièces selon leur titre
+	 *
+	 * @param $liste la liste à trier
+	 * @param $ordre l'ordre selon lequel trier (croissant ou décroissant)
+	 * @return $liste la liste triée
+	 */
+	public function trierListeTitre($liste, $ordre){
+		
+		//fonction de comparaison pour trier selon l'ordre croissant
+		function triageTitreCroissant($a, $b){
+			return strcasecmp($a->getTitre(), $b->getTitre());
+		}
+		
+		//fonction de comparaison pour trier selon l'ordre décroissant
+		function triageTitreDecroissant($a, $b){
+			if(strcasecmp($a->getTitre(), $b->getTitre()) > 0)
+				return -1;
+			if(strcasecmp($a->getTitre(), $b->getTitre()) < 0)
+				return 1;
+			else
+				return 0;
+		}
+		
+		//choisir la bonne fonction de comparaison selon l'ordre choisi et trier la liste par valeur
+		$triage = ($ordre == 'croissant') ? 'triageTitreCroissant' : 'triageTitreDecroissant';
+		usort($liste, $triage);
+		return $liste;
+	}
 }
 
 ?>

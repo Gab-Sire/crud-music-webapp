@@ -12,7 +12,7 @@
 		//construit un tableau des résultats trouvés
 		
 		echo "<table>";
-		echo "<tr><th><?=$rechercheArtiste?></th><th><?=$rechercheAlbum?></th><th><?=$recherchePiece?></th></tr>";
+		echo "<thead><tr><th>$rechercheArtiste</th><th>$rechercheAlbum</th><th>$recherchePiece</td></tr></thead>";
 	
 		
 		$elementEvidence = "<span class='texteTrouve'>" . strtoupper($tableauTrouves[0]) . "</span>";
@@ -20,6 +20,8 @@
 	
 		
 		foreach($tableauTrouves as $elementTrouve){
+			
+			$id = 0;
 			
 			foreach($albums as $album){
 				
@@ -35,7 +37,7 @@
 				if($elementTrouve == $album->getTitre() || $elementTrouve == $album->getNomArtiste()){	
 					
 					if($albumInitial != $album)
-						echo "<tr><td>" . $artiste . "</td><td>" . $titre . "</td><td>-</td></tr>";
+						echo "<tr><td>" . $artiste . "</td><td><a href='index.php?action=detail&id=$id'>" . $titre . "</a></td><td>-</td></tr>";
 					$albumInitial = $album;
 				}
 				
@@ -43,23 +45,24 @@
 				foreach($listePieces as $piece){
 					
 					//écrit une entrée de tableau si le titre de la pièce correspond à l'expression recherchée
-					if($elementTrouve == $piece->getTitre()){
-						
+					if(trim($elementTrouve) == trim($piece->getTitre())){
+								
 						//cherche le titre de la pièce
 						$pieceTitre = $piece->getTitre();
 						
 						//remplace l'expression dans le titre de la pièce par l'expression stylée en évidence correspondante
 						$pieceTitre = preg_replace($tableauTrouves[1], $elementEvidence, $pieceTitre);
 						
-						echo "<tr><td>" . $artiste . "</td><td>" . $titre . "</td><td>" . $pieceTitre . "</td></tr>";
+						echo "<tr><td>" . $artiste . "</td><td><a href='index.php?action=detail&id=$id'>" . $titre . "</a></td><td>" . $pieceTitre . "</td></tr>";
 					}
 				}
+				$id++;
 			}
 		}
 		echo "</table>";
 	}
 ?>
 </table>
-
-<input type="button" value="<?=$rechercheBoutonRetour?>" />
-
+<div class='retour'>
+	<a href="index.php"><input type="button"  class='boutonRetour' value="<?=$rechercheBoutonRetour?>" /></a>
+</div>

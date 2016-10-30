@@ -8,16 +8,48 @@ require_once('modele/AlbumModele.php');
 		public function __construct() {
 		}
 		
+		/**
+		 * Fonction qui permet d'aiguiller les différentes actions désirées par l'utilisateur
+		 */
 		public function dispatch(){
-			$action = (isset($_GET['action']) ? $_GET['action'] : "");
-			$id = (isset($_GET['id']) ? $_GET['id'] : "");
-			$expression = (isset($_POST['recherche']) ? $_POST['recherche'] : "");
-			$confirmationSupprimer = (isset($_POST['supprimer']) ? $_POST['supprimer'] : false);
+			$action = (isset($_GET['action']) ? $_GET['action'] : "");							//action pour aiguiller
+			$id = (isset($_GET['id']) ? $_GET['id'] : "");										//identifiant pour rechercher un album par son id
+			$expression = (isset($_POST['recherche']) ? $_POST['recherche'] : "");				//expression recherchée 
+			$triage = (isset($_GET['triage']) ? $_GET['triage'] : "");							//triage voulu pour trier les pièces dans détail
+			$ordre = (isset($_GET['ordre']) ? $_GET['ordre'] : "");								//ordre voulu pour trier les pièces dans détail
+			$titreAlbum = (isset($_GET['titre']) ? $_GET['titre'] : "");						//titre pour recherche un album par son titre
+			$confirmationSupprimer = (isset($_POST['supprimer']) ? $_POST['supprimer'] : false);//confirmation pour supprimer l'album ou non
 			
 			switch($action){
 				case "detail":
 					$this->modele = new AlbumModele();
+					
+					//cherche l'album selon son identifiant
 					$album = $this->modele->getById($id);
+					ob_start();
+					include './vue/DetailVue.inc.php';
+					$contenuSpecifique = ob_get_clean();
+					require_once('vue/gabarit.php');
+					break;
+				case "trier":
+					$this->modele = new AlbumModele();
+					
+					//cherche l'album selon son titre et prend sa liste de pièces
+					$album = $this->modele->getByTitre($titreAlbum);
+					$listePieces = $album->getListePieces();
+					
+					//aiguille la fonction dans AlbumModèle selon le triage voulu (par numéro, durée ou titre)
+					switch($triage){
+						case "numero":
+							$listePiecesTriee = $this->modele->trierListeNumero($listePieces, $ordre);
+							break;
+						case "duree":
+							$listePiecesTriee = $this->modele->trierListeDuree($listePieces, $ordre);
+							break;
+						case "titre":
+							$listePiecesTriee = $this->modele->trierListeTitre($listePieces, $ordre);
+							break;
+					}
 					ob_start();
 					include './vue/DetailVue.inc.php';
 					$contenuSpecifique = ob_get_clean();
@@ -83,7 +115,7 @@ require_once('modele/AlbumModele.php');
 					require_once('vue/gabarit.php');
 					break;
 				case "rechercher":
-					//si la requ�te de recherche est vide, r�-affiche l'index
+					//si la requête de recherche est vide, ré-affiche l'index
 					if(trim($expression) != ""){
 						$this->modele = new AlbumModele();
 						$albums = $this->modele->getAll();
