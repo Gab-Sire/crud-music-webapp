@@ -65,7 +65,7 @@ footer{
 
 /* style pour les tableaux */
 
-#tableDetailAlbumPieces table, #tableauRecherche table {
+#tableDetailAlbumPieces, #tableauRecherche {
 	margin: auto;
 	border: 1px solid black;
 	border-collapse: collapse;
@@ -79,7 +79,7 @@ footer{
 	color: white;
 }
 
-#tableDetailAlbumPieces tbody tr:NTH-CHILD(odd),  #tableauRecherche thead tr:NTH-CHILD(odd){
+#tableDetailAlbumPieces tbody tr:NTH-CHILD(odd),  #tableauRecherche tbody tr:NTH-CHILD(odd){
 	background-color: white;
 }
 
