@@ -100,31 +100,10 @@ require_once('modele/AlbumModele.php');
 						for($i=0; $i<count($_POST['titresPieces']); $i++){
 							$titre = $_POST['titresPieces'][$i];
 							$duree = $_POST['dureesPieces'][$i];
-							if($this->modele->validationChampsPieces($titre, $duree) != "erreurTitrePieces")
-								$erreurTitrePiece[] = substr_replace($this->modele->validationChampsPieces($titre, $duree),"ajoutListeBox",0);
-							else{
-								$erreurTitrePiece[] = $this->modele->validationChampsPieces($titre, $duree);
-								$compteurErreur++;
-							}
-							
-							if($this->modele->validationChampsPieces($titre, $duree) != "erreurDureePieces")
-								$erreurDureePiece[] = substr_replace($this->modele->validationChampsPieces($titre, $duree),"ajoutListeBox",0);
-							else{
-								$erreurDureePiece[] = $this->modele->validationChampsPieces($titre, $duree);
-								$compteurErreur++;
-							}
-							
-							for($j=0; $j<count($erreurTitrePiece); $j++){
-								$compteur = 0;
-								if($erreurTitrePiece[$j] == '' && $erreurDureePiece[$j])
-									$compteur++;
-							}
-							if($compteur > 0){
-								$compteurErreur++;
-								$erreurTitrePiece[0] = 'erreurTitrePieces';
-								$erreurDureePiece[0] = 'erreurDureePieces';
-							}
+							$erreurTitrePiece[] = $this->modele->validationTitresPieces($titre, $duree);
+							$erreurDureePiece[] = $this->modele->validationDureesPieces($titre, $duree);
 						}
+						
 						
 						// Verification + Changement de style si les champs sont invalides
 						$titreInputClasse = ($validationTitre == false) ? "erreur" : "ajoutInfosBox";
