@@ -309,7 +309,7 @@ class AlbumModele extends Modele {
 	 * @param $url l'url de l'album
 	 */
 	public function validationUrlArtiste($url){
-		return preg_match("/^([\da-z\.-]+)\.([a-z\.]{2,6})$/u", $url);
+		return preg_match("/^([\da-z\.-]+)\.([a-z\.]{1,6})$/u", $url);
 	}
 	
 	/**

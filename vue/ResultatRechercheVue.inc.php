@@ -11,7 +11,7 @@
 		
 		//construit un tableau des résultats trouvés
 		
-		echo "<table>";
+		echo "<table id='tableauRecherche'>";
 		echo "<thead><tr><th>$rechercheArtiste</th><th>$rechercheAlbum</th><th>$recherchePiece</td></tr></thead>";
 		
 		$elementEvidence = "<span class='texteTrouve'>" . strtoupper($tableauTrouves[0]) . "</span>";

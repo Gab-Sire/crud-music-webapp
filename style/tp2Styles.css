@@ -65,7 +65,7 @@ footer{
 
 /* style pour les tableaux */
 
-table {
+#tableDetailAlbumPieces table, #tableauRecherche table {
 	margin: auto;
 	border: 1px solid black;
 	border-collapse: collapse;
@@ -74,20 +74,20 @@ table {
 	font-size: 15px;
 }
 
-thead tr{
+#tableDetailAlbumPieces thead tr, #tableauRecherche thead tr{
 	background-color: black;
 	color: white;
 }
 
-tbody tr:NTH-CHILD(odd){
+#tableDetailAlbumPieces tbody tr:NTH-CHILD(odd),  #tableauRecherche thead tr:NTH-CHILD(odd){
 	background-color: white;
 }
 
-tbody tr:NTH-CHILD(even){
+#tableDetailAlbumPieces tbody tr:NTH-CHILD(even),  #tableauRecherche thead tr:NTH-CHILD(even){
 	background-color: #b3b3b3;
 }
 
-thead tr th, tbody tr td{
+#tableDetailAlbumPieces thead tr th, #tableauRecherche thead tr th, #tableDetailAlbumPieces tbody tr td, #tableauRecherche  tbody tr td{
 	padding: 2.5px;
 }
 
