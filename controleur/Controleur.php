@@ -67,12 +67,17 @@ require_once('modele/AlbumModele.php');
 							$elementsASupprimer[] = $checkbox;
 						}
 						if(isset($elementsASupprimer)){
+						
+							//permet d'effacer la bonne ligne dans le fichier texte, comme les albums se suivent à chaque fois l'index de la ligne s'ajuste de -1
+							$nombreAlbumsSupprimes = 0;
+							
 							foreach($elementsASupprimer as $element){
 							 	if($element !== ""){
 							 		$id = $element;
 							 		$album = $this->modele->getById($id);
-							 		$this->modele->supprimeAlbum($album, $id);
+							 		$this->modele->supprimeAlbum($album, $id, $nombreAlbumsSupprimes);
 								}
+								$nombreAlbumsSupprimes++;
 							}
 						}
 					}
