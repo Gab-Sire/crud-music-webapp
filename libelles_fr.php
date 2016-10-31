@@ -1,3 +1,13 @@
+<!-- ******************************************************************
+	Nom du fichier: 	libelles.fr.php
+
+	Auteur:				Vincent Perrault et Gabriel Cyr
+	Date de creation: 	30 octobre 2016
+	Cours-Groupe: 		420-323-AL groupe: 1 et 2
+	
+	But du document:
+		Page qui représente la liste des titres et le texte de l'application
+********************************************************************  -->
 <?php
 
 $titreListe = "Collection d&apos;albums de Vincent et Gabriel";
