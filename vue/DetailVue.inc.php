@@ -1,3 +1,13 @@
+<!-- ******************************************************************
+	Nom du fichier: 	DetailVue.inc.php
+
+	Auteur:				Vincent Perrault et Gabriel Cyr
+	Date de creation: 	30 octobre 2016
+	Cours-Groupe: 		420-323-AL groupe: 1 et 2
+	
+	But du document:
+		Page qui représente la vue d'inclusion de detail pour un album de l'application
+********************************************************************  -->
 <?php
 	require 'libelles_fr.php';
 	$titrePage = $album->getTitre();
