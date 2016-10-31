@@ -1,3 +1,13 @@
+<!-- ******************************************************************
+	Nom du fichier: 	AlbumModele.php
+
+	Auteur:				Vincent Perrault et Gabriel Cyr
+	Date de creation: 	30 octobre 2016
+	Cours-Groupe: 		420-323-AL groupe: 1 et 2
+	
+	But du document:
+		Page qui représente le modele pour les albums de l'application
+********************************************************************  -->
 <?php
 include 'classe/Album.php';
 include 'classe/Piece.php';
