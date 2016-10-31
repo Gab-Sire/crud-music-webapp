@@ -1,3 +1,13 @@
+<!-- ******************************************************************
+	Nom du fichier: 	gabarit.php
+
+	Auteur:				Vincent Perrault et Gabriel Cyr
+	Date de creation: 	30 octobre 2016
+	Cours-Groupe: 		420-323-AL groupe: 1 et 2
+	
+	But du document:
+		Page qui représente la vue commune aux pages de l'application de l'application
+********************************************************************  -->
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
